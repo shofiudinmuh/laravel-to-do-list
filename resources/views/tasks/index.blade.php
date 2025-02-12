@@ -33,26 +33,43 @@
     </div>
 
 
-
-    <ul>
-        @foreach ($tasks as $task)
-        <li>
-            <form action="{{ route('task.update', $task->id) }}" method="POST" style="display:inline">
-                @csrf
-                @method('PUT')
-                <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' :
-                '' }}>
-                {{ $task->name }}
-            </form>
-            <form action="{{ route('task.destroy', $task->id) }}" method="POST" style="display:inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-        @endforeach
-        <div class="flex">{{ $tasks->links() }}</div>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th><a
+                        href="{{ route('task.index', ['sort' => 'name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Name</a>
+                </th>
+                <th><a
+                        href="{{ route('task.index', ['sort' => 'completed', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Status</a>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($tasks as $task)
+            <tr>
+                <td>{{ $task->name }}</td>
+                <td>
+                    <form action="{{ route('task.update', $task->id) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('PUT')
+                        <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ?
+                        'checked' :
+                        '' }}>
+                    </form>
+                </td>
+                <td>
+                    <form action="{{ route('task.destroy', $task->id) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="flex">{{ $tasks->links()}}</div>
 </body>
 
 </html>

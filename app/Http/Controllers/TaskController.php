@@ -13,15 +13,16 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        // $query = Task::query();
-        // if ($query->has('search')) {
-        //     $query->where('name', 'like', '%' . $request->input('search') . '%');
-        // }
+        $query = Task::query();
 
-        // $tasks = $query->paginate(10);
+        if ($request->has('sort')) {
+            $sortField = $request->input('sort');
+            $sortDirection = $request->input('direction', 'asc');
+            $query->orderBy($sortField, $sortDirection);
+        }
+
         $tasks = Task::search($request->search)->paginate(10);
         return view('tasks.index', compact('tasks'));
-        // return view('tasks.index')->with('tasks', $tasks);
     }
 
     /**

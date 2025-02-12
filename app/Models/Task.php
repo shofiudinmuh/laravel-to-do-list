@@ -19,4 +19,10 @@ class Task extends Model
         'name',
         'completed',
     ];
+
+
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('name', 'like', '%' . $keyword . '%');
+    }
 }

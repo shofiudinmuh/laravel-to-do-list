@@ -13,13 +13,25 @@
     <div style="color: green">
         {{ session('success') }}
     </div>
-    @endif
-    <h1>To-Do-List</h1>
-    <form action="{{ route('task.store') }}" method="POST">
-        @csrf
-        <input type="text" name="name" placeholder="New Task" required>
-        <button type="submit">Add Task</button>
-    </form>
+
+    <div class="flex">
+        <div class="col">
+            @endif
+            <h1>To-Do-List</h1>
+            <form action="{{ route('task.store') }}" method="POST">
+                @csrf
+                <input type="text" name="name" placeholder="New Task" required>
+                <button type="submit">Add Task</button>
+            </form>
+        </div>
+        <div class="col">
+            <form action="{{ route('task.index') }}" method="GET">
+                <input type="text" name="search" placeholder="Search tasks..." value="{{ request('search') }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
 
 
     <ul>

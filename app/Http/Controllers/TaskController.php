@@ -13,8 +13,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::paginate(10);
         return view('tasks.index', compact('tasks'));
+        // return view('tasks.index')->with('tasks', $tasks);
     }
 
     /**
@@ -36,7 +37,7 @@ class TaskController extends Controller
 
         Task::create($request->all());
 
-        return redirect()->route('task.index');
+        return redirect()->route('task.index')->with('success', 'Task created successfully!');
     }
 
     /**
@@ -62,7 +63,7 @@ class TaskController extends Controller
             'completed' => $request->has('completed') ? 1 : 0,
         ]);
 
-        return redirect()->route('task.index');
+        return redirect()->route('task.index')->with('success', 'Task updated successfully!');
     }
 
     /**

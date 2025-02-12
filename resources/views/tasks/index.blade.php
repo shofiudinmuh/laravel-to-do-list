@@ -9,6 +9,11 @@
 </head>
 
 <body>
+    @if (@session('success'))
+    <div style="color: green">
+        {{ session('success') }}
+    </div>
+    @endif
     <h1>To-Do-List</h1>
     <form action="{{ route('task.store') }}" method="POST">
         @csrf
@@ -34,6 +39,7 @@
             </form>
         </li>
         @endforeach
+        <div class="flex">{{ $tasks->links() }}</div>
     </ul>
 </body>
 
